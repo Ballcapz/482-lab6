@@ -109,45 +109,45 @@ public class MyBigIntegers {
 
     public MyBigIntegers Minus(MyBigIntegers x) {
         MyBigIntegers result = new MyBigIntegers();
-        // some logic to check signs and such here in the future
-        if (this.len > x.len) {
-            MyBigIntegers equalizedX = equalize(x, this.len - x.len);
-            result = Subtract(this, equalizedX);
-        } else if (this.len < x.len) {
-            MyBigIntegers equalized = equalize(this, x.len - this.len);
-            result = Subtract(equalized, x);
+
+        // if the second value is larger than the number we are subtracting from
+        if (this.len < x.len) {
+            result.sign = -1;
+            MyBigIntegers eqTh = equalize(x, x.len - this.len);
+            result = Subtract(x, eqTh);
         } else {
-            result = Subtract(this, x);
+            result.sign = 1;
+            MyBigIntegers eqX = equalize(x, this.len - x.len);
+            result = Subtract(this, eqX);
         }
         return result;
     }
 
-    // a - b
+    // a - b ( a always greater than b, b padded out)
     public static MyBigIntegers Subtract(MyBigIntegers a, MyBigIntegers b) {
         int size = a.len > b.len ? a.len : b.len;
         MyBigIntegers result;
-        long[] resArr = new long[size];
-        long[] min = new long[a.len];
-        System.arraycopy(a.arr, 0, min, 0, a.len);
+        long[] resultArr = new long[size];
+        long[] minuend;
+        minuend = new long[a.len];
+        System.arraycopy(a.arr, 0, minuend, 0, a.len);
         int i = 0;
         long borrow = a.base;
         while (i < a.len && i < b.len) {
-            if (min[i] > b.arr[i]) {
-                resArr[i] = min[i] - b.arr[i];
-            } else {
-                min[i] += borrow;
-                --min[i + 1];
-                resArr[i] = min[i] - b.arr[i];
+            if (minuend[i] >= b.arr[i])
+                resultArr[i] = minuend[i] - b.arr[i];
+            else {
+                minuend[i] += borrow;
+                --minuend[i + 1];
+                resultArr[i] = minuend[i] - b.arr[i];
             }
             i++;
         }
         while (i < a.len) {
-            resArr[i] = min[i];
+            resultArr[i] = minuend[i];
             i++;
         }
-
-        result = new MyBigIntegers(resArr, a.base);
-        result.sign = a.sign;
+        result = new MyBigIntegers(resultArr, a.base);
         return truncate(result);
     }
 
