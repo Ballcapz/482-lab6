@@ -51,6 +51,22 @@ public class MyBigIntegers {
         System.out.println(stringToPrint);
     }
 
+    // helper mainly to verify results
+    public String getString() {
+        MyBigIntegers numToRet = truncate(this);
+        String stringToRet = "";
+
+        if (this.sign == -1) {
+            stringToRet = "-";
+        }
+
+        for (int i = numToRet.len - 1; i >= 0; i--) {
+            stringToRet += numToRet.arr[i] + "";
+        }
+
+        return stringToRet;
+    }
+
     // addition
     public MyBigIntegers Plus(MyBigIntegers x) {
         MyBigIntegers result = new MyBigIntegers();
@@ -107,6 +123,7 @@ public class MyBigIntegers {
         return truncate(result);
     }
 
+    // subtraction
     public MyBigIntegers Minus(MyBigIntegers x) {
         MyBigIntegers result = new MyBigIntegers();
 
@@ -150,6 +167,75 @@ public class MyBigIntegers {
         result = new MyBigIntegers(resultArr, a.base);
         return truncate(result);
     }
+
+    // Multiplication
+    public MyBigIntegers Times(MyBigIntegers x) {
+        return Multiply(this, x);
+    }
+
+    public MyBigIntegers Multiply(MyBigIntegers a, MyBigIntegers b) {
+        MyBigIntegers result = new MyBigIntegers();
+        for (int i = 0; i < b.len; i++) {
+            long carry = 0;
+            long[] res = new long[a.len + 1];
+            for (int j = 0; j < a.len; j++) {
+                long product = b.arr[i] * a.arr[j];
+                product += carry;
+                carry = product / a.base;
+                res[j] = product % a.base;
+            }
+            if (carry != 0) {
+                res[a.len] = carry;
+            }
+            MyBigIntegers nextToAdd = new MyBigIntegers(rightShiftBy(res, i), a.base);
+            result = Add(result, nextToAdd);
+        }
+        result.base = a.base;
+        if (b.sign == -1 || a.sign == -1)
+            result.sign = -1;
+
+        return result;
+    }
+
+    public static long[] rightShiftBy(long[] arr, int times) {
+        long[] res = new long[arr.length + times];
+        for (int i = arr.length - 1; i >= 0; i--) {
+            res[i + times] = arr[i];
+        }
+        while (times > 0) {
+            times--;
+            res[times] = 0;
+        }
+        return res;
+    }
+
+    // public MyBigIntegers TimesFaster(MyBigIntegers x) {
+    // return MultiplyFaster(this, x);
+    // }
+
+    // // multiply (karatsuba version)
+    // public MyBigIntegers MultiplyFaster(MyBigIntegers a, MyBigIntegers b) {
+    // int size1 = a.len;
+    // int size2 = b.len;
+    // int max = Math.max(size1, size2);
+
+    // if (max < 10) {
+    // return Multiply(a, b);
+    // }
+
+    // // max / 2 rounded
+    // max = (max / 2) + (max % 2);
+
+    // // multiplier
+    // long multiplier = (long)Math.pow(10, max);
+
+    // // do the stuff
+    // MyBigIntegers i = a / multiplier;
+    // long j = a - (i * multiplier);
+    // long k
+    // long l
+
+    // }
 
     // class sized helpers
     private static long[] truncate(long arr[]) {
