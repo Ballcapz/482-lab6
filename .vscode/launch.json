@@ -4,6 +4,13 @@
             "type": "java",
             "name": "CodeLens (Launch) - Running",
             "request": "launch",
+            "mainClass": "src.Running",
+            "projectName": "Lab 6_b703c76e"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Running",
+            "request": "launch",
             "mainClass": "Running"
         }
     ]

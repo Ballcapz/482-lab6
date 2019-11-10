@@ -1,6 +1,6 @@
-import java.util.Arrays;
+package src;
 
-import sun.util.logging.resources.logging;
+import java.util.Arrays;
 
 public class MyBigIntegers {
     static long defaultBase = 10;

@@ -1,21 +1,8 @@
-public class Running {
+package src;
 
-    public static void main(String[] args) {
+public class Fibonacci {
 
-        // long classicFibMatrixResult = fibMatrix(10);
-        MyBigIntegers bigTest = bigFibMatrix(75);
-        long test = fibMatrix(75);
-        long bigFMResult = Long.parseLong(bigTest.getString());
-
-        if (test == bigFMResult) {
-            System.out.println("Success!!");
-        } else {
-            System.out.println("Broken... :(");
-        }
-
-    }
-
-    static MyBigIntegers fibLoop(int x) {
+    public static MyBigIntegers bigFibLoop(int x) {
         // temp values to store in place
         MyBigIntegers twoPrevious = new MyBigIntegers("0");
         MyBigIntegers previous = new MyBigIntegers("1");
@@ -36,7 +23,7 @@ public class Running {
         return previous;
     }
 
-    static long classicFibLoop(int x) {
+    public static long fibLoop(int x) {
         // temp values to store in place
         long twoPrevious = 0, previous = 1, current;
         // exit if fib will be 0
@@ -55,7 +42,8 @@ public class Running {
         return previous;
     }
 
-    static MyBigIntegers bigFibMatrix(long x) {
+    ////////////////////////////////////////////////////////////////////////
+    public static MyBigIntegers bigFibMatrix(long x) {
 
         MyBigIntegers F[][] = new MyBigIntegers[][] { { new MyBigIntegers("1"), new MyBigIntegers("1") },
                 { new MyBigIntegers("1"), new MyBigIntegers("0") } };
@@ -103,7 +91,7 @@ public class Running {
     }
 
     ////////////////////////////////////////////////////////////////////////
-    static long fibMatrix(long x) {
+    public static long fibMatrix(long x) {
         // create new matrix of {{1, 1} {1, 0}}
         long F[][] = new long[][] { { 1, 1 }, { 1, 0 } };
         // get out if x == 0
