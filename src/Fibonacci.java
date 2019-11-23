@@ -1,5 +1,10 @@
 package src;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 public class Fibonacci {
 
     public static MyBigIntegers bigFibLoop(int x) {
@@ -144,4 +149,20 @@ public class Fibonacci {
             multiply(F, M);
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////
+    static long fibFormula(long x) {
+        double phi = (1 + Math.sqrt(5)) / 2;
+        return (long) Math.round(Math.pow(phi, x) / Math.sqrt(5));
+    }
+
+    static BigInteger fibFormulaBig(long x) {
+        BigDecimal partPhi = new BigDecimal(1 / Math.sqrt(5));
+        BigDecimal firstRoot = new BigDecimal((1 + Math.sqrt(5)) / 2);
+        BigDecimal secondRoot = new BigDecimal((1 - Math.sqrt(5)) / 2);
+
+        return (firstRoot.pow((int) x).multiply(partPhi)).subtract(partPhi.multiply(secondRoot.pow((int) x)))
+                .toBigInteger();
+    }
+
 }

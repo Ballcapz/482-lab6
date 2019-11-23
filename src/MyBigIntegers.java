@@ -30,7 +30,7 @@ public class MyBigIntegers {
         }
     }
 
-    private MyBigIntegers(long arr[], long base) {
+    public MyBigIntegers(long arr[], long base) {
         this.arr = arr;
         this.base = base;
         this.len = arr.length;
